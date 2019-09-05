@@ -1,0 +1,14 @@
+{
+  "name": "talkjs-node",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:kevlened/talkjs-node.git",
+  "author": "kevlened <boyettel@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^9.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.2"
+  }
+}
