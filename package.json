@@ -1,14 +1,21 @@
 {
   "name": "talkjs-node",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:kevlened/talkjs-node.git",
   "author": "kevlened <boyettel@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
+    "esm": "^3.2.25",
     "got": "^9.6.0"
   },
   "devDependencies": {
-    "typescript": "^3.6.2"
+    "@types/node": "^12.7.4",
+    "typescript": "^3.6.2",
+    "typescript-transpile-only": "^0.0.4"
   }
 }
