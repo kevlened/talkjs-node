@@ -7,10 +7,10 @@
   "author": "kevlened <boyettel@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "release": "yarn build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
-    "esm": "^3.2.25",
     "got": "^9.6.0"
   },
   "devDependencies": {
