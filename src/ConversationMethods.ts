@@ -20,9 +20,34 @@ class ConversationNotificationMethods {
     }
 }
 
+enum MessageType {
+    UserMessage = "UserMessage",
+    SystemMessage = "SystemMessage"
+}
+
+interface Message {
+    text: string;
+    sender?: string;
+    type: MessageType;
+    attachmentToken?: string;
+    custom?: Map<string, any>;
+}
+
 interface ConversationMessageListParams {
     conversationId: string;
     limit?: number;
+    startingAfter?: string;
+}
+
+interface ConversationMessageSendParams {
+    conversationId: string;
+    messages: Array<Message>;
+}
+
+interface ConversationMessageUpdateParams {
+    conversationId: string;
+    messageId: string;
+    message: Map<string, any>;
 }
 
 class ConversationMessageMethods {
@@ -34,14 +59,37 @@ class ConversationMessageMethods {
         this._request = request;
     }
 
+    async send(params: ConversationMessageSendParams) {
+        const {
+            conversationId,
+            messages
+        } = params;
+        return this._request('get', `/conversations/${conversationId}/messages`, {
+            body: messages
+        });
+    }
+
+    async get(conversationId: string, messageId: string) {
+        return this._request('get', `/conversations/${conversationId}/messages/${messageId}`);
+    }
+
+    async update(params: ConversationMessageUpdateParams) {
+        const {conversationId, messageId, message} = params;
+        return this._request('post', `/conversations/${conversationId}/messages/${messageId}`, {
+            body: message
+        });
+    }
+
     async list(params: ConversationMessageListParams) {
         const {
             conversationId,
-            limit
+            limit,
+            startingAfter
         } = params;
         return this._request('get', `/conversations/${conversationId}/messages`, {
             query: {
-                limit
+                limit,
+                startingAfter
             }
         });
     }
@@ -75,21 +123,21 @@ class ConversationParticipantMethods {
 
     async add(params: ConversationParticipantAddParams) {
         const {conversationId, userId, details} = params;
-        return this._request('put', `/conversations/${conversationId}/notifications/${userId}`, {
+        return this._request('put', `/conversations/${conversationId}/participants/${userId}`, {
             body: details
         });
     }
 
     async update(params: ConversationParticipantUpdateParams) {
         const {conversationId, userId, details} = params;
-        return this._request('patch', `/conversations/${conversationId}/notifications/${userId}`, {
+        return this._request('patch', `/conversations/${conversationId}/participants/${userId}`, {
             body: details
         });
     }
 
     async delete(params: ConversationParticipantDeleteParams) {
         const {conversationId, userId} = params;
-        return this._request('delete', `/conversations/${conversationId}/notifications/${userId}`);
+        return this._request('delete', `/conversations/${conversationId}/participants/${userId}`);
     }
 
     async list(params: ConversationListParams) {
