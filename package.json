@@ -6,6 +6,9 @@
   "repository": "git@github.com:kevlened/talkjs-node.git",
   "author": "kevlened <boyettel@gmail.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "release": "yarn build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
