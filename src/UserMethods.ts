@@ -57,13 +57,14 @@ class UserConversationMethods {
 }
 
 interface User {
-    name?: string;
-    email?: Array<string>;
+    name: string;
     welcomeMessage?: string;
     photoUrl?: string;
     role?: string;
+    email?: Array<string>;
     phone?: Array<string>;
     custom?: Map<string, string>;
+    locale?: string;
 }
 
 interface UserListParams {
