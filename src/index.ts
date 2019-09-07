@@ -1,5 +1,5 @@
+const got = require('got');
 import {createHash} from 'crypto';
-import got from 'got';
 import UserMethods from './UserMethods';
 import ConversationMethods from './ConversationMethods';
 import ImportMethods from './ImportMethods';
