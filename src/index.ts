@@ -56,8 +56,13 @@ export default class TalkJS {
         });
 
         async function request(method, url, options) {
-            const resp = await client[method](url, options);
-            return resp.body.data;
+            try {
+                const resp = await client[method](url, options);
+                return resp.body.data;
+            } catch (e) {
+                console.log(e.body);
+                throw e;
+            }
         };
 
         this.users = new UserMethods(request);
