@@ -1,22 +1,22 @@
-interface ImportConversationMessagesParams {
-    conversationId: string;
-    messages: Array<any>;
-}
-
-class ImportConversationMethods {
-    /** @internal */
+export class ImportConversationMethods {
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
     }
 
-    async messages(params: ImportConversationMessagesParams) {
-        const {
-            conversationId,
-            messages
-        } = params;
+    async messages({conversationId, messages}: {
+        conversationId: string;
+        messages: Array<any>;
+    }) {
         return this._request('post', `/import/conversations/${conversationId}/messages`, {
             body: messages
         });
@@ -24,11 +24,17 @@ class ImportConversationMethods {
 }
 
 export default class ImportMethods {
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
     public conversations: ImportConversationMethods;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
         this.conversations = new ImportConversationMethods(this._request);

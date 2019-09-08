@@ -1,49 +1,55 @@
-interface UserSessionListParams {
-    userId: string;
-}
-
 class UserSessionMethods {
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
     }
 
-    async list(params: UserSessionListParams) {
-        const {userId} = params;
+    // BREAKING: make async generator
+    async list({userId}: {userId: string;}) {
         return this._request('get', `/users/${userId}/sessions`);
     }
 }
 
-interface UserConversationListParams {
-    userId: string;
-    limit?: number;
-    startingAfter?: string;
-    lastMessageAfter?: number;
-    lastMessageBefore?: number;
-    unreadsOnly?: boolean;
-}
-
 class UserConversationMethods {
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
     }
 
-    async list(params: UserConversationListParams) {
-        const {
-            userId,
-            limit,
-            startingAfter,
-            lastMessageAfter,
-            lastMessageBefore,
-            unreadsOnly
-        } = params;
+    // BREAKING: make async generator
+    async list({
+        userId,
+        limit,
+        startingAfter,
+        lastMessageAfter,
+        lastMessageBefore,
+        unreadsOnly
+    }: {
+        userId: string;
+        limit?: number;
+        startingAfter?: string;
+        lastMessageAfter?: number;
+        lastMessageBefore?: number;
+        unreadsOnly?: boolean;
+    }) {
         return this._request('get', `/users/${userId}/conversations`, {
             query: {
                 limit,
@@ -67,19 +73,19 @@ interface User {
     locale?: string;
 }
 
-interface UserListParams {
-    limit?: number;
-    isOnline?: boolean;
-    startingAfter?: string;
-}
-
 export default class UserMethods {
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
     public sessions: UserSessionMethods;
     public conversations: UserConversationMethods;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
         this.sessions = new UserSessionMethods(this._request);
@@ -100,8 +106,12 @@ export default class UserMethods {
         });
     }
 
-    async list(params: UserListParams) {
-        const {limit, isOnline, startingAfter} = params;
+    // BREAKING: make async generator
+    async list({limit, isOnline, startingAfter}: {
+        limit?: number;
+        isOnline?: boolean;
+        startingAfter?: string;
+    }) {
         return this._request('get', '/users', {
             query: {
                 limit,

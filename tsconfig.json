@@ -15,5 +15,15 @@
     ],
     "exclude": [
         "node_modules"
-    ]
+    ],
+    "typedocOptions": {
+        "out": "docs",
+        "theme": "minimal",
+        "hideProjectTitle": true,
+        "hideSources": true,
+        "hideBreadcrumbs": true,
+        "namedAnchors": false,
+        "excludePrivate": true,
+        "readme": "none"
+    }
 }

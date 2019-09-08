@@ -4,12 +4,6 @@ import UserMethods from './UserMethods';
 import ConversationMethods from './ConversationMethods';
 import ImportMethods from './ImportMethods';
 
-function sha1(string) {
-    const sha = createHash('sha1');
-    sha.update(string);
-    return sha.digest('hex');
-}
-
 /**
  * A helper method to predictably compute a Conversation ID
  * based on participants' ids in the given conversation.
@@ -20,31 +14,30 @@ function sha1(string) {
 export function oneOnOneId(userId1: string, userId2: string) {
     const sorted = [userId1, userId2].sort();
     const encoded = JSON.stringify(sorted);
-    const hash = sha1(encoded);
+
+    // Calculate the sha1
+    const sha = createHash('sha1');
+    sha.update(encoded);
+    const hash = sha.digest('hex');
+
     return hash.slice(0, 20);
 }
 
-interface TalkJSParams {
-    baseUrl?: string;
-    appId: string;
-    apiKey: string;
-}
-
+// BREAKING: remove the default
 export default class TalkJS {
     public users: UserMethods;
     public conversations: ConversationMethods;
     public import: ImportMethods;
 
-    constructor(params: TalkJSParams) {
-        const {
-            appId,
-            apiKey
-        } = params;
-
-        let {
-            baseUrl = 'https://api.talkjs.com'
-        } = params;
-
+    constructor({
+        baseUrl = 'https://api.talkjs.com',
+        appId,
+        apiKey
+    } : {
+        baseUrl?: string;
+        appId: string;
+        apiKey: string;
+    }) {
         baseUrl = baseUrl + `/v1/${appId}`;
 
         const client = got.extend({

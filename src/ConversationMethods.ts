@@ -1,19 +1,22 @@
-interface ConversationNotificationSendParams {
-    conversationId: string;
-    notification: Map<string, any>;
-}
-
-class ConversationNotificationMethods {
-    /** @internal */
+export class ConversationNotificationMethods {
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
     }
 
-    async send(params: ConversationNotificationSendParams) {
-        const {conversationId, notification} = params;
+    async send({conversationId, notification}: {
+        conversationId: string;
+        notification: Map<string, any>;
+    }) {
         return this._request('post', `/conversations/${conversationId}/notifications`, {
             body: notification
         });
@@ -33,37 +36,25 @@ interface Message {
     custom?: Map<string, any>;
 }
 
-interface ConversationMessageListParams {
-    conversationId: string;
-    limit?: number;
-    startingAfter?: string;
-}
-
-interface ConversationMessageSendParams {
-    conversationId: string;
-    messages: Array<Message>;
-}
-
-interface ConversationMessageUpdateParams {
-    conversationId: string;
-    messageId: string;
-    message: Map<string, any>;
-}
-
-class ConversationMessageMethods {
-    /** @internal */
+export class ConversationMessageMethods {
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
     }
 
-    async send(params: ConversationMessageSendParams) {
-        const {
-            conversationId,
-            messages
-        } = params;
+    async send({conversationId, messages}: {
+        conversationId: string;
+        messages: Array<Message>;
+    }) {
         return this._request('post', `/conversations/${conversationId}/messages`, {
             body: messages
         });
@@ -73,19 +64,22 @@ class ConversationMessageMethods {
         return this._request('get', `/conversations/${conversationId}/messages/${messageId}`);
     }
 
-    async update(params: ConversationMessageUpdateParams) {
-        const {conversationId, messageId, message} = params;
+    async update({conversationId, messageId, message}: {
+        conversationId: string;
+        messageId: string;
+        message: Map<string, any>;
+    }) {
         return this._request('post', `/conversations/${conversationId}/messages/${messageId}`, {
             body: message
         });
     }
 
-    async list(params: ConversationMessageListParams) {
-        const {
-            conversationId,
-            limit,
-            startingAfter
-        } = params;
+    // BREAKING: make async generator
+    async list({conversationId, limit, startingAfter}: {
+        conversationId: string;
+        limit?: number;
+        startingAfter?: string;
+    }) {
         return this._request('get', `/conversations/${conversationId}/messages`, {
             query: {
                 limit,
@@ -95,53 +89,56 @@ class ConversationMessageMethods {
     }
 }
 
-interface ConversationParticipantAddParams {
-    conversationId: string;
-    userId: string;
-    details: Map<string, any>;
-}
-
-interface ConversationParticipantUpdateParams {
-    conversationId: string;
-    userId: string;
-    details: Map<string, any>;
-}
-
-interface ConversationParticipantDeleteParams {
-    conversationId: string;
-    userId: string;
-}
-
 class ConversationParticipantMethods {
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
     }
 
-    async add(params: ConversationParticipantAddParams) {
-        const {conversationId, userId, details} = params;
+    async add({conversationId, userId, details}: {
+        conversationId: string;
+        userId: string;
+        details: Map<string, any>;
+    }) {
         return this._request('put', `/conversations/${conversationId}/participants/${userId}`, {
             body: details
         });
     }
 
-    async update(params: ConversationParticipantUpdateParams) {
-        const {conversationId, userId, details} = params;
+    async update({conversationId, userId, details}: {
+        conversationId: string;
+        userId: string;
+        details: Map<string, any>;
+    }) {
         return this._request('patch', `/conversations/${conversationId}/participants/${userId}`, {
             body: details
         });
     }
 
-    async delete(params: ConversationParticipantDeleteParams) {
-        const {conversationId, userId} = params;
+    async delete({conversationId, userId}: {
+        conversationId: string;
+        userId: string;
+    }) {
         return this._request('delete', `/conversations/${conversationId}/participants/${userId}`);
     }
 
-    async list(params: ConversationListParams) {
-        const {limit, startingAfter, lastMessageAfter, lastMessageBefore, filter} = params;
+    // BREAKING: make async generator
+    async list({limit, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
+        limit?: number;
+        startingAfter?: string;
+        lastMessageAfter?: number;
+        lastMessageBefore?: number;
+        filter?: Map<string, any>;
+    }) {
         const query = {
             limit,
             startingAfter,
@@ -163,22 +160,20 @@ interface Conversation {
     custom?: Map<string, string>;
 }
 
-interface ConversationListParams {
-    limit?: number;
-    startingAfter?: string;
-    lastMessageAfter?: number;
-    lastMessageBefore?: number;
-    filter?: Map<string, any>;
-}
-
 export default class ConversationMethods {
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     private _request: any;
     public notifications: ConversationNotificationMethods;
     public messages: ConversationMessageMethods;
     public participants: ConversationParticipantMethods;
 
-    /** @internal */
+    /**
+        @internal
+        @hidden
+    */
     constructor(request) {
         this._request = request;
         this.notifications = new ConversationNotificationMethods(this._request);
@@ -200,8 +195,14 @@ export default class ConversationMethods {
         });
     }
 
-    async list(params: ConversationListParams) : Promise<Array<Conversation>> {
-        const {limit, startingAfter, lastMessageAfter, lastMessageBefore, filter} = params;
+    // BREAKING: make async generator
+    async list({limit, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
+        limit?: number;
+        startingAfter?: string;
+        lastMessageAfter?: number;
+        lastMessageBefore?: number;
+        filter?: Map<string, any>;
+    }) : Promise<Array<Conversation>> {
         const query = {
             limit,
             startingAfter,
