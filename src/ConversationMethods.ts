@@ -64,7 +64,7 @@ class ConversationMessageMethods {
             conversationId,
             messages
         } = params;
-        return this._request('get', `/conversations/${conversationId}/messages`, {
+        return this._request('post', `/conversations/${conversationId}/messages`, {
             body: messages
         });
     }
