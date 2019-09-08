@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc",
     "build:docs": "typedoc && concat-md docs/ > docs/example.md",
-    "release": "yarn build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "test": "yarn build && node tests",
+    "release": "yarn test && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
     "got": "^9.6.0"
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@types/node": "^12.7.4",
     "concat-md": "^0.3.0",
+    "sinon": "^7.4.2",
+    "tape": "^4.11.0",
     "typedoc": "^0.15.0",
     "typedoc-plugin-markdown": "^2.1.10",
     "typescript": "^3.6.2"

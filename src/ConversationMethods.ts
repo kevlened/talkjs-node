@@ -1,3 +1,5 @@
+import {paginate} from './util';
+
 export class ConversationNotificationMethods {
     /**
         @internal
@@ -74,13 +76,14 @@ export class ConversationMessageMethods {
         });
     }
 
-    // BREAKING: make async generator
-    async list({conversationId, limit, startingAfter}: {
+    async *list({conversationId, limit, startingAfter}: {
         conversationId: string;
         limit?: number;
         startingAfter?: string;
     }) {
-        return this._request('get', `/conversations/${conversationId}/messages`, {
+        yield* paginate({
+            request: this._request,
+            url: `/conversations/${conversationId}/messages`,
             query: {
                 limit,
                 startingAfter
@@ -130,25 +133,6 @@ class ConversationParticipantMethods {
     }) {
         return this._request('delete', `/conversations/${conversationId}/participants/${userId}`);
     }
-
-    // BREAKING: make async generator
-    async list({limit, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
-        limit?: number;
-        startingAfter?: string;
-        lastMessageAfter?: number;
-        lastMessageBefore?: number;
-        filter?: Map<string, any>;
-    }) {
-        const query = {
-            limit,
-            startingAfter,
-            lastMessageAfter,
-            lastMessageBefore,
-            filter: undefined
-        };
-        if (filter) query.filter = encodeURIComponent(JSON.stringify(filter));
-        return this._request('get', '/conversations', {query});
-    }
 }
 
 interface Conversation {
@@ -195,14 +179,13 @@ export default class ConversationMethods {
         });
     }
 
-    // BREAKING: make async generator
-    async list({limit, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
+    async *list({limit, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
         limit?: number;
         startingAfter?: string;
         lastMessageAfter?: number;
         lastMessageBefore?: number;
         filter?: Map<string, any>;
-    }) : Promise<Array<Conversation>> {
+    }) : AsyncGenerator<Conversation> {
         const query = {
             limit,
             startingAfter,
@@ -211,6 +194,10 @@ export default class ConversationMethods {
             filter: undefined
         };
         if (filter) query.filter = encodeURIComponent(JSON.stringify(filter));
-        return this._request('get', '/conversations', {query});
+        yield* paginate({
+            request: this._request,
+            url: '/conversations',
+            query
+        });
     }
 }

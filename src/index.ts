@@ -23,8 +23,7 @@ export function oneOnOneId(userId1: string, userId2: string) {
     return hash.slice(0, 20);
 }
 
-// BREAKING: remove the default
-export default class TalkJS {
+export class TalkJS {
     public users: UserMethods;
     public conversations: ConversationMethods;
     public import: ImportMethods;

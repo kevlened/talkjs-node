@@ -14,9 +14,9 @@ yarn add talkjs-node
 ## Usage
 
 ```javascript
-const TalkJS = require('talkjs-node').default;
+const {TalkJS} = require('talkjs-node');
 // or
-import TalkJS from 'talkjs-node';
+import {TalkJS} from 'talkjs-node';
 
 const client = new TalkJS({
     appId: 'YOUR_APP_ID',
@@ -24,9 +24,15 @@ const client = new TalkJS({
 });
 
 (async function main() {
-    // List the first 100 users
-    const users = await client.users.list({limit: 100});
-    for (const user of users)) {
+    // List all the users
+    for await (const user of client.users.list()) {
+        console.log(user.name);
+    }
+
+    // If using Node < v10
+    const users = client.users.list();
+    let user, done = false;
+    while (({value: user, done} = await users.next()) && !done) {
         console.log(user.name);
     }
 })();
@@ -66,7 +72,6 @@ The methods match those provided by [the TalkJS REST api](https://talkjs.com/doc
 * `client.conversations.participants.add({conversationId: string, userId: string, details: Map<string, any>})`
 * `client.conversations.participants.update({conversationId: string, userId: string, details: Map<string, any>})`
 * `client.conversations.participants.delete({conversationId: string, userId: string})`
-* `client.conversations.participants.list({limit?: number, startingAfter?: string, lastMessageAfter?: number, lastMessageBefore?: number, filter?: Map<string, any>})`
 
 ## License
 

@@ -1,3 +1,5 @@
+import {paginate} from './util';
+
 class UserSessionMethods {
     /**
         @internal
@@ -13,9 +15,11 @@ class UserSessionMethods {
         this._request = request;
     }
 
-    // BREAKING: make async generator
-    async list({userId}: {userId: string;}) {
-        return this._request('get', `/users/${userId}/sessions`);
+    async *list({userId}: {userId: string;}) {
+        yield* paginate({
+            request: this._request,
+            url: `/users/${userId}/sessions`
+        });
     }
 }
 
@@ -34,8 +38,7 @@ class UserConversationMethods {
         this._request = request;
     }
 
-    // BREAKING: make async generator
-    async list({
+    async *list({
         userId,
         limit,
         startingAfter,
@@ -50,7 +53,9 @@ class UserConversationMethods {
         lastMessageBefore?: number;
         unreadsOnly?: boolean;
     }) {
-        return this._request('get', `/users/${userId}/conversations`, {
+        yield* paginate({
+            request: this._request,
+            url: `/users/${userId}/conversations`,
             query: {
                 limit,
                 unreadsOnly,
@@ -106,13 +111,14 @@ export default class UserMethods {
         });
     }
 
-    // BREAKING: make async generator
-    async list({limit, isOnline, startingAfter}: {
+    async *list({limit = 10, isOnline, startingAfter}: {
         limit?: number;
         isOnline?: boolean;
         startingAfter?: string;
     }) {
-        return this._request('get', '/users', {
+        yield* paginate({
+            request: this._request,
+            url: '/users',
             query: {
                 limit,
                 isOnline,
