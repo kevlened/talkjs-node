@@ -127,7 +127,7 @@ class ConversationParticipantMethods {
         });
     }
 
-    async delete({conversationId, userId}: {
+    async remove({conversationId, userId}: {
         conversationId: string;
         userId: string;
     }) {

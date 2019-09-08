@@ -71,7 +71,7 @@ The methods match those provided by [the TalkJS REST api](https://talkjs.com/doc
 * `client.conversations.messages.list(conversationId: string)`
 * `client.conversations.participants.add({conversationId: string, userId: string, details: Map<string, any>})`
 * `client.conversations.participants.update({conversationId: string, userId: string, details: Map<string, any>})`
-* `client.conversations.participants.delete({conversationId: string, userId: string})`
+* `client.conversations.participants.remove({conversationId: string, userId: string})`
 
 ## License
 
