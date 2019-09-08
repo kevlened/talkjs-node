@@ -58,7 +58,7 @@ export default class TalkJS {
         async function request(method, url, options) {
             try {
                 const resp = await client[method](url, options);
-                return resp.body.data;
+                return resp.body.data || resp.body;
             } catch (e) {
                 console.log(e.body);
                 throw e;

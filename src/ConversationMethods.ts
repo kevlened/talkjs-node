@@ -155,6 +155,8 @@ class ConversationParticipantMethods {
 }
 
 interface Conversation {
+    id?: string;
+    participants?: Map<string, Map<string, string>>;
     subject?: string;
     welcomeMessages?: Array<string>;
     photoUrl?: string;
@@ -188,7 +190,7 @@ export default class ConversationMethods {
         return this.update(conversationId, conversation);
     }
 
-    async get(conversationId: string) {
+    async get(conversationId: string) : Promise<Conversation> {
         return this._request('get', `/conversations/${conversationId}`);
     }
 
@@ -198,7 +200,7 @@ export default class ConversationMethods {
         });
     }
 
-    async list(params: ConversationListParams) {
+    async list(params: ConversationListParams) : Promise<Array<Conversation>> {
         const {limit, startingAfter, lastMessageAfter, lastMessageBefore, filter} = params;
         const query = {
             limit,
