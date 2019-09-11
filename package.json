@@ -6,6 +6,13 @@
   "repository": "git@github.com:kevlened/talkjs-node.git",
   "author": "kevlened <boyettel@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "talkjs",
+    "api",
+    "wrapper",
+    "sdk",
+    "node"
+  ],
   "files": [
     "dist"
   ],
