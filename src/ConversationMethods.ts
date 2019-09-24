@@ -76,7 +76,7 @@ export class ConversationMessageMethods {
         });
     }
 
-    async *list({conversationId, limit, startingAfter}: {
+    async *list({conversationId, limit = 10, startingAfter}: {
         conversationId: string;
         limit?: number;
         startingAfter?: string;
@@ -179,13 +179,13 @@ export default class ConversationMethods {
         });
     }
 
-    async *list({limit, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
+    async *list({limit = 10, startingAfter, lastMessageAfter, lastMessageBefore, filter}: {
         limit?: number;
         startingAfter?: string;
         lastMessageAfter?: number;
         lastMessageBefore?: number;
         filter?: Map<string, any>;
-    }) : AsyncGenerator<Conversation> {
+    } = {}) : AsyncGenerator<Conversation> {
         const query = {
             limit,
             startingAfter,

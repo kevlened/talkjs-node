@@ -40,7 +40,7 @@ class UserConversationMethods {
 
     async *list({
         userId,
-        limit,
+        limit = 10,
         startingAfter,
         lastMessageAfter,
         lastMessageBefore,
@@ -115,7 +115,7 @@ export default class UserMethods {
         limit?: number;
         isOnline?: boolean;
         startingAfter?: string;
-    }) {
+    } = {}) {
         yield* paginate({
             request: this._request,
             url: '/users',

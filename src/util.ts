@@ -4,9 +4,12 @@ export async function* paginate({request, url, query = {}} : {
     query?: any
 }) {
     let startingAfter = query.startingAfter;
+    query.limit = query.limit || 10;
     const nextPage = async () => {
-        const results = await request('get', url, {query});
-        if (query.limit && results.length === query.limit) startingAfter = results[results.length - 1].id;
+        const results = await request('get', url, {
+            query: {...query, startingAfter}
+        });
+        if (results.length === query.limit) startingAfter = results[results.length - 1].id;
         else startingAfter = null;
         return results;
     }

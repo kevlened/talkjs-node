@@ -66,9 +66,9 @@ The methods match those provided by [the TalkJS REST api](https://talkjs.com/doc
 * `client.conversations.list({limit?: number, startingAfter?: string, lastMessageAfter?: number, lastMessageBefore?: number, filter?: Map<string, any>})`
 * `client.conversations.notifications.send(conversationId: string, notification: Notification)`
 * `client.conversations.messages.send(conversationId: string)`
-* `client.conversations.messages.get(conversationId: string)`
+* `client.conversations.messages.get(conversationId: string, messageId: string)`
 * `client.conversations.messages.update(conversationId: string)`
-* `client.conversations.messages.list(conversationId: string)`
+* `client.conversations.messages.list({conversationId: string})`
 * `client.conversations.participants.add({conversationId: string, userId: string, details: Map<string, any>})`
 * `client.conversations.participants.update({conversationId: string, userId: string, details: Map<string, any>})`
 * `client.conversations.participants.remove({conversationId: string, userId: string})`
