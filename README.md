@@ -3,6 +3,8 @@ A Node.js wrapper for the talkjs rest api
 
 ## Install
 
+This library is compatible with Node v10+
+
 ```
 npm i talkjs-node
 
@@ -26,13 +28,6 @@ const client = new TalkJS({
 (async function main() {
     // List all the users
     for await (const user of client.users.list()) {
-        console.log(user.name);
-    }
-
-    // If using Node < v10
-    const users = client.users.list();
-    let user, done = false;
-    while (({value: user, done} = await users.next()) && !done) {
         console.log(user.name);
     }
 })();

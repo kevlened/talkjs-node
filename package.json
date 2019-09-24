@@ -1,6 +1,9 @@
 {
   "name": "talkjs-node",
   "version": "0.2.3",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:kevlened/talkjs-node.git",
