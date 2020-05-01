@@ -60,7 +60,7 @@ The methods match those provided by [the TalkJS REST api](https://talkjs.com/doc
 * `client.conversations.update(conversationId: string, conversation: Conversation)`
 * `client.conversations.list({limit?: number, startingAfter?: string, lastMessageAfter?: number, lastMessageBefore?: number, filter?: Map<string, any>})`
 * `client.conversations.notifications.send(conversationId: string, notification: Notification)`
-* `client.conversations.messages.send(conversationId: string)`
+* `client.conversations.messages.send({conversationId: string, messages: Array<Message>})`
 * `client.conversations.messages.get(conversationId: string, messageId: string)`
 * `client.conversations.messages.update(conversationId: string)`
 * `client.conversations.messages.list({conversationId: string})`
