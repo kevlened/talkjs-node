@@ -31,6 +31,8 @@ function setup() {
     return {client};
 }
 
+test('oneOnOneId', wrapper(({t}) => t.equal(oneOnOneId('a', 'b'), 'd12e223825a919e00efd')));
+
 test('users async generator', wrapper(async ({t, client}) => {
     const users = [];
     sinon.spy(client.users, '_request');
